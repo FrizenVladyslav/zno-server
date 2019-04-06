@@ -1,0 +1,5 @@
+require('./lection')
+require('./lesson')
+require('./section')
+require('./upload')
+require('./user')
