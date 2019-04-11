@@ -17,8 +17,8 @@ const schema = new Schema({
   }
 })
 
-schema.static('changeLectionsCount', async function sectionId(sectionId, inc = true) {
-    console.log('draft', this.draft)
+schema.static('changeLectionsCount', async function sectionId(sectionId, inc) {
+    if (inc === undefined || inc === null) return undefined
     return await this.findByIdAndUpdate(
       sectionId,
       { $inc: { lectionsCount: inc ? 1 : -1 } },

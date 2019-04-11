@@ -3,10 +3,21 @@ const passport = require('passport')
 const router = require('express').Router()
 
 const auth = require('../utils/auth')
+const { isUserAdmin } = require('../utils/checkUser')
 const User = mongoose.model('User')
 
+router.get('/getAllUsers', auth.required, isUserAdmin, async (req, res) => {
+  try {
+    let users = await User.find({})
+    res.json(users)
+  } catch (e) {
+    console.log(e)
+    errorHandler(e, res)
+  }
+})
+
 //POST new user route (optional, everyone has access)
-router.post('/register', auth.optional, (req, res, next) => {
+router.post('/register', auth.optional, (req, res) => {
   const { body: { user } } = req
 
   if(!user.email) {
